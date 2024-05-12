@@ -42,12 +42,14 @@ main()
 			printf("\nTiempo total de vuelo: %i minutos\n",total);
 		}else if(escalas=='N'){
 		 	cant_esc=0;
+			total=t_vuelo;
+		 	printf("\nTiempo total de vuelo: %i minutos\n",total);
 			if(m_tiempo==0 || t_vuelo<m_tiempo){
 				m_tiempo=t_vuelo;
 				nro_se=nro;
 			}
 		}
-		printf("\n\t¿Desea seguir ingresando vuelos? SI/NO :");
+		printf("\n\tÂ¿Desea seguir ingresando vuelos? SI/NO :");
 		fflush(stdin);
 		scanf("%s",rta);
 		system("pause");
