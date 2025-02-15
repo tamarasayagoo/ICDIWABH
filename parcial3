@@ -1,0 +1,195 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <string.h>
+
+#define num 10
+
+
+
+void cargar(int *,char (*)[50],int *,int,int,char *,int);
+
+int buscar (int *, int *, int *, char (*)[50], int, int);
+
+void ausentes(int *,char (*)[50],int *,int *,int);
+
+void main()
+
+{
+
+	int op,vdni[num]={0},vmesa[num]={0},vasist[num]={0},dni,mesa,pos=0,encontro;
+
+	char vnombre[num][50],nombre[50];
+
+	
+
+	do
+
+	{
+
+		system("cls");
+
+		printf(" 1- Ingreso de lista de invitados\n");
+
+		printf(" 2- Ingreso de personas al salon\n");
+
+		printf(" 3- Personas ausentes\n");
+
+		printf(" 4- Salir");
+
+		printf("\n\n Elija una opcion: ");
+
+		scanf("%d", &op);
+
+		
+
+		switch(op)
+
+		{
+
+			case 1:
+
+				system("cls");
+
+				printf(" Ingreso de lista de invitados\n");
+
+				printf("\n DNI del invitado: ");
+
+				scanf("%d", &dni);
+
+				printf("\n Nombre del invitado: ");
+
+				fflush(stdin);
+
+				scanf("%s",nombre);
+
+				printf("\n Num de mesa: ");
+
+				scanf("%d", &mesa);
+
+				cargar(vdni,vnombre,vmesa,dni,mesa,nombre,pos);
+
+				pos++;
+
+				break;
+
+			case 2:
+
+				system("cls");
+
+				printf("Ingreso de personas al salon\n");
+
+				printf("\n DNI de la persona que ingresa al salon: ");
+
+				scanf("%d", &dni);
+
+				encontro=buscar(vdni,vmesa,vasist,vnombre,dni,pos);
+
+				if(encontro!=-1)
+
+				{
+
+					printf("\n Invitado encontrado: %s",vnombre[encontro]);
+
+					printf("\n Mesa asignada: %d", vmesa[encontro]);
+
+					vasist[encontro]=1;//confirma asistencia
+
+				}
+
+				else
+
+				{
+
+					printf("\n Persona no invitada");
+
+				}
+
+				break;
+
+			case 3:
+
+				system("cls");
+
+				printf(" Personas ausentes\n");
+
+				ausentes(vdni,vnombre,vmesa,vasist,pos);
+
+				break;
+
+			case 4:
+
+				break;
+
+		}
+
+	}while(op!=4);
+
+	
+
+}
+
+
+
+void cargar(int *vdni,char (*vnom)[50],int *vmesa,int dni,int mesa,char *nom,int pos)
+
+{
+
+	strcpy(*(vnom+pos), nom);
+
+	*(vdni+pos)=dni;
+
+	*(vmesa+pos)=mesa;
+
+}
+
+
+
+int buscar (int *vdni, int *vmesa, int *vasist, char (*vnom)[50], int dni, int pos) 
+
+{
+
+    int i;
+
+	for (i = 0; i < pos; i++) 
+
+	{
+
+        if (*(vdni + i) == dni) 
+
+		{  // Si el DNI coincide
+
+            return i;  // Retorna la posici�n donde se encuentra el invitado
+
+        }
+
+    }
+
+    return -1;  // Si no se encuentra, devuelve -1 (persona no invitada)
+
+}
+
+
+
+void ausentes(int *vdni,char (*vnom)[50],int *vmesa,int *vasist,int pos)
+
+{
+
+	int i;
+
+	for(i=0;i<pos;i++)
+
+	{
+
+		if(*(vasist+i)==0)
+
+		{
+
+			printf("\n DNI: %d, Nombre: %s, Mesa: %d",*(vdni+i),*(vnom+i),*(vmesa+i));
+
+		}
+
+	}
+
+}
